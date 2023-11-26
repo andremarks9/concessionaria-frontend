@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const signUp = (username: String, password: string) => {
+export const signUp = (username: String, password: string, setToken: any) => {
   const body = {
     username,
     password,
@@ -9,7 +9,8 @@ export const signUp = (username: String, password: string) => {
   axios
     .post("http://localhost:3003/admin/signup", body)
     .then((res) => {
-      console.log(res.data);
+      setToken(res.data);
+      localStorage.setItem("token", res.data);
     })
     .catch((e) => {
       console.log(e.message);

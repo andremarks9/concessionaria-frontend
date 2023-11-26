@@ -1,20 +1,27 @@
 "use client";
-
+import { useState } from "react";
 import useForm from "@/hooks/useForm";
-import { login } from "@/services/login";
 import { signUp } from "@/services/signUp";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+  const [token, setToken] = useState("");
   const [form, handleInputChange, clear] = useForm({
     username: "",
     password: "",
   });
 
+  const goToFeed = useRouter();
+
   const OnSubmitForm = (e: any) => {
     e.preventDefault();
-    signUp(form.username, form.password);
+    signUp(form.username, form.password, setToken);
   };
+
+  if (token) {
+    goToFeed.push("/");
+  }
 
   return (
     <div className="flex flex-col justify-center items-center gap-3 w-full h-screen">
